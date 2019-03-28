@@ -37,8 +37,7 @@ export default class DisplayBannerWebPart extends BaseClientSideWebPart<IDisplay
       '</ol>' +
       '</div>' +
       '<div id="addEvents" class="event-add" style="Display:none">' +
-      '<h3 class="banner-itemview" style="cursor:pointer">VIEW COVERAGE EVENTS <a href="' + siteURL + '/Pages/AddListItem.aspx?CName=Banners"><i class="icon-add"></i></a> </h3>' +
-      '</div>' +
+      '<a href="' + siteURL + '/Pages/AddListItem.aspx?CName=Banners" class="banner-anchor"><i class="icon-add"></i></a><a href="' + siteURL + '/Pages/listview.aspx?CName=Banners" class="banner-itemview">VIEW COVERAGE EVENTS  </a>' + '</div>' +
       '<section>';
     this.BannerPage(this.userflag);
     let viewevent = document.getElementsByClassName('banner-itemview');
