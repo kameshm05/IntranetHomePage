@@ -45,9 +45,9 @@ export default class DisplayBannerWebPart extends BaseClientSideWebPart<IDisplay
     for (let i = 0; i < viewevent.length; i++) {
       viewevent[i].addEventListener("click", (e: Event) => this.viewpageRedirect(siteURL));
     }
-    
+
   }
-  viewpageRedirect(siteURL){
+  viewpageRedirect(siteURL) {
     window.location.href = "" + siteURL + "/Pages/ListView.aspx?CName=Banners";
   }
   BannerPage(userflag) {
@@ -64,45 +64,43 @@ export default class DisplayBannerWebPart extends BaseClientSideWebPart<IDisplay
   
       }*/
     let objResults;
-   var siteURL = this.context.pageContext.web.absoluteUrl;
+    var siteURL = this.context.pageContext.web.absoluteUrl;
     objResults = readItems("Banners", ["Title", "Modified", "LinkURL", "Display", "BannerContent", "Image"], 3, "Modified", "Display", 1);
     objResults.then((items: any[]) => {
-      if(items.length>0)
-      {
-      for (let i = 0; i < items.length; i++) { 
-        if (i == 0) {
-          activeflag = "active";
-        } else {
-          activeflag = "";
+      if (items.length > 0) {
+        for (let i = 0; i < items.length; i++) {
+          if (i == 0) {
+            activeflag = "active";
+          } else {
+            activeflag = "";
+          }
+          if (items.length > 1) {
+            renderliitems += '<li data-slide-to="' + i + '" data-target="#carousel-banner" class="' + activeflag + '">' + '</li>';
+          }
+          // var reg1 = new RegExp('<div class=\"ExternalClass[0-9A-F]+\">', "");
+          // var reg2 = new RegExp('</div>$', "");
+          // var bancont = items[i].BannerContent.replace(reg1, "").replace(reg2, "");
+          renderhtml += '<div class="item ' + activeflag + '">';
+          renderhtml += '<img src="' + items[i].Image.Url + '" style="max-height: 319px;"alt="Slide" />';
+          renderhtml += '<div class="carousel-caption">';
+          // renderhtml += '<p> ' + bancont + '</p>';
+          // if(bancont.length>65)
+          // {
+          //   bancont=bancont.substring(0,65)+"...";
+          // }
+          var DottedTitle = items[i].Title;
+          if (DottedTitle.length > 65) {
+            DottedTitle = DottedTitle.substring(0, 65) + "...";
+          }
+          renderhtml += '<h3 class="wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;"> ' + DottedTitle + '</h3>';
+          if (items[i].LinkURL !== null) {
+            renderhtml += '<div align="center">' + '<a href="' + items[i].LinkURL.Url + '" class="wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;">lEARN mORE</a>' + '</div>';
+          }
+          renderhtml += '</div>';
+          renderhtml += '</div>';
         }
-        if(items.length>1){
-          renderliitems += '<li data-slide-to="' + i + '" data-target="#carousel-banner" class="' + activeflag + '">' + '</li>';
-        }
-        // var reg1 = new RegExp('<div class=\"ExternalClass[0-9A-F]+\">', "");
-        // var reg2 = new RegExp('</div>$', "");
-        // var bancont = items[i].BannerContent.replace(reg1, "").replace(reg2, "");
-        renderhtml += '<div class="item ' + activeflag + '">';
-        renderhtml += '<img src="' + items[i].Image.Url + '" style="max-height: 319px;"alt="Slide" />';
-        renderhtml += '<div class="carousel-caption">';
-       // renderhtml += '<p> ' + bancont + '</p>';
-        // if(bancont.length>65)
-        // {
-        //   bancont=bancont.substring(0,65)+"...";
-        // }
-var DottedTitle=items[i].Title;
-        if(DottedTitle.length>65)
-        {
-          DottedTitle=DottedTitle.substring(0,65)+"...";
-        }
-        renderhtml += '<h3 class="wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;"> ' + DottedTitle + '</h3>';
-        if (items[i].LinkURL !== null) {
-          renderhtml += '<div align="center">' + '<a href="' + items[i].LinkURL.Url + '" class="wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;">lEARN mORE</a>' + '</div>';
-        }
-        renderhtml += '</div>';
-        renderhtml += '</div>';
       }
-    }
-      else if(items.length==0){
+      else if (items.length == 0) {
         activeflag = "active";
         renderliitems += '<li data-slide-to="1" data-target="#carousel-banner" class="' + activeflag + '"></li>';
         renderhtml += '<div class="item ' + activeflag + '">';
@@ -114,11 +112,10 @@ var DottedTitle=items[i].Title;
         renderhtml += '</div>';
 
       }
-      
+
       renderhtml += '</div>';
-      ​renderhtml += '<!-- Left and right controls -->';
-      if(items.length>1)
-      {
+      renderhtml += '<!-- Left and right controls -->';
+      if (items.length > 1) {
         renderhtml += '<a class="left carousel-control" href="#carousel-banner" data-slide="prev">';
         renderhtml += '<span class="icon-right-arrow"></span>';
         //renderhtml += '<span class="icon-left-arrow">Previous</span>';
@@ -126,7 +123,7 @@ var DottedTitle=items[i].Title;
 
         renderhtml += '<a class="right carousel-control" href="#carousel-banner" data-slide="next">';
         renderhtml += '<span class="icon-left-arrow"></span>';
-       // renderhtml += '<span class="icon-right-arrow">Next</span>';
+        // renderhtml += '<span class="icon-right-arrow">Next</span>';
         renderhtml += '</a>';
       }
       //renderhtml += '<div id="addEvents" class="event-add">'+'<h3>UPDATE COVERAGE EVENTS <a href="#"><i class="icon-add"></i></a> </h3>'+'</div>';
